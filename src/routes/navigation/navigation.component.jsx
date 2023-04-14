@@ -8,13 +8,14 @@ import { signOutUser } from '../../util/firebase/firebase.util'
 import './navigation.styles.scss';
 
 const Navigation = () => {
-  const { currentUser, setCurrentUser } = useContext(UserContext);
+  const { currentUser } = useContext(UserContext);
   console.log("Login User is:", currentUser);
 
   const signOutHandler = async () => {
     const res = await signOutUser();
     console.log(res);
-    setCurrentUser(null);
+
+    alert("Good bye!.");
   };
 
   return (
