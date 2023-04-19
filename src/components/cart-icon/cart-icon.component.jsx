@@ -8,6 +8,7 @@ const CartIcon = () => {
   const { isCartOpen, setIsCartOpen, cartItemCount } = useContext(CartContext);
 
   const toggleIsCartOpen = () => setIsCartOpen(!isCartOpen);
+  console.log("CartIcon is Open: ", isCartOpen, " and have itemsCount:", cartItemCount);
 
   return (
     <CartIconContainer onClick={toggleIsCartOpen}>
