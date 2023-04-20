@@ -41,7 +41,7 @@ googleProvider.setCustomParameters({
 export const db                       = getFirestore();
 export const auth                     = getAuth();
 export const signInWithGooglePopup    = () => signInWithPopup(auth, googleProvider);
-export const signInWithGoogleRedirect = () => signInWithGoogleRedirect(auth, googleProvider);
+export const signInWithGoogleRedirect = () => signInWithRedirect(auth, googleProvider);
 
 export const createUserDocumentFromAuth = async (userAuth, additionalInformation) => {
   if( !userAuth ) {
@@ -116,12 +116,5 @@ export const getCategoriesAndDocuments = async () => {
   const q = query(collectionRef);
 
   const querySnapshot = await getDocs(q);
-  const categoryMap = querySnapshot.docs.reduce((acc, docSnapshot) => {
-    const { title, items } = docSnapshot.data();
-    acc[title.toLowerCase()] = items;
-    return acc;
-  }, {});
-  console.log("get", categoryMap, " from database");
-
-  return categoryMap;
+  return querySnapshot.docs.map((doc) => doc.data());
 };
