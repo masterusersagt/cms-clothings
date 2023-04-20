@@ -12,11 +12,10 @@ import { signOutUser }               from '../../utils/firebase/firebase.utils'
 
 import { selectCurrentUser }         from '../../store/user/user.selector';
 
-import {NavigationContainer, LogoContainer, NavLinks, NavLink } from './navigation.styles';
+import { NavigationContainer, NavLinks, NavLink, LogoContainer } from './navigation.styles';
 
 const Navigation = () => {
   const currentUser = useSelector(selectCurrentUser);
-
   const { isCartOpen }  = useContext(CartContext);
 
   console.log("Login User is:", currentUser);
@@ -37,6 +36,7 @@ const Navigation = () => {
         <NavLinks>
           <NavLink to='/shop'>SHOP</NavLink>
           {
+            console.log('@@@ currentUser', currentUser) &&
             currentUser ? (<NavLink as='span' onClick={signOutHandler}>SIGN OUT</NavLink>)
                         : (<NavLink to='/auth'>SIGN IN</NavLink>)
           }

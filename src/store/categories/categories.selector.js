@@ -1,3 +1,5 @@
+import { createSelector } from "reselect";
+
 export const selectCategoriesMap = (state) => {
   console.log('selector fired');
 

@@ -8,16 +8,14 @@ import Category                      from '../category/category.component';
 import { setCategories }             from '../../store/categories/categories.action';
 import { getCategoriesAndDocuments } from '../../utils/firebase/firebase.utils';
 
-import './shop.styles.scss';
-
 const Shop = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
     const getCategoriesMap = async () => {
-      const categoriesArray = await getCategoriesAndDocuments('categories');
-      console.log("CategoriesArray is: ", categoriesArray);
-      dispatch(setCategories(categoriesArray));
+      const categories = await getCategoriesAndDocuments('categories');
+      console.log("categories is: ", categories);
+      dispatch(setCategories(categories));
     };
 
     getCategoriesMap();

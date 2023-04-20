@@ -28,16 +28,15 @@ const Checkout = () => {
                 </HeaderBlock>
             </CheckoutHeader>
             {
-                cartItems.map( (cartItem) =>
+                cartItems.map((cartItem) =>
                     {
-                        const { id, name, quantity} = cartItem;
-                        return (<CheckOutItem key={cartItem.id} cartItem={cartItem}/>);
+                        return (<CheckOutItem key={cartItem.id} cartItem={cartItem} />);
                     }
                 )
             }
             <Total>Total: {cartTotal} €</Total>
         </CheckoutContainer>
     );
-}
+};
 
 export default Checkout;
