@@ -11,12 +11,14 @@ import { CategoryContainer, Title }                  from './category.styles';
 //import { CategoriesContext } from '../../contexts/categories.context';
 
 const Category = () => {
+  console.log('render/re-rendering category component');
   const { category } = useParams();
   const categoriesMap = useSelector(selectCategoriesMap);
   const [products, setProducts] = useState(categoriesMap[category]);
 //  const { categoriesMap } = useContext(CategoriesContext);
-
+ 
   useEffect(() => {
+    console.log('effect fired calling setProduct');
     setProducts(categoriesMap[category]);
   }, [category, categoriesMap]);
 

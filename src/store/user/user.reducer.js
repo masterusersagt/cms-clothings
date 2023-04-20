@@ -1,4 +1,4 @@
-import { USER_ACTION_TYPES } from './user.types';
+import USER_ACTION_TYPES from './user.types';
 
 const INITIAL_STATE = {
     currentUser   :  null
@@ -6,12 +6,12 @@ const INITIAL_STATE = {
 
 export const userReducer = (state = INITIAL_STATE,
                             action) => {
-    console.log('dispatched', action);
+    console.log('User dispatched action: ', action, ' state ', state);
 
     const { type, payload } = action;
 
     switch(type) {
-        case 'SET_CURRENT_USER':
+        case USER_ACTION_TYPES.SET_CURRENT_USER:
             return {
                 ...state, // alle variablen zuruckgeben nur currentUser ändern
                 currentUser: payload

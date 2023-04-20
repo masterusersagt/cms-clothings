@@ -1,7 +1,8 @@
 import { Fragment , useContext}      from 'react';
-import { Outlet, Link }              from 'react-router-dom';
+import { Outlet }                    from 'react-router-dom';
 import { ReactComponent as ChmLogo } from '../../assets/crown.svg'
 import { useSelector }               from 'react-redux';
+
 import CartIcon                      from '../../components/cart-icon/cart-icon.component';
 import CartDropdown                  from '../../components/cart-dropdown/cart-dropdown.component';
 
