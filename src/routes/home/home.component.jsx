@@ -1,4 +1,5 @@
-import { Outlet } from 'react-router-dom'
+import { Outlet } from 'react-router-dom';
+
 import DirectoryMenu from '../../components/directory-menu/directory-menu.component';
 
 const Home = () => {
