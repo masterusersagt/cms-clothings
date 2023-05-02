@@ -42,6 +42,31 @@ export const auth                     = getAuth();
 export const signInWithGooglePopup    = () => signInWithPopup(auth, googleProvider);
 export const signInWithGoogleRedirect = () => signInWithRedirect(auth, googleProvider);
 
+export const addCollectionAndDocuments = async (
+  collectionKey,
+  objectsToAdd,
+  field
+) => {
+  const collectionRef = collection(db, collectionKey);
+  const batch = writeBatch(db);
+
+  objectsToAdd.forEach((object) => {
+    const docRef = doc(collectionRef, object.title.toLowerCase());
+    batch.set(docRef, object);
+  });
+
+  await batch.commit();
+  console.log('done');
+};
+
+export const getCategoriesAndDocuments = async () => {
+  const collectionRef = collection(db, 'categories');
+  const q = query(collectionRef);
+
+  const querySnapshot = await getDocs(q);
+  return querySnapshot.docs.map((docSnapshot) => docSnapshot.data());
+};
+
 export const createUserDocumentFromAuth = async (userAuth,
                                                  additionalInformation = {}
 ) => {
@@ -69,7 +94,7 @@ export const createUserDocumentFromAuth = async (userAuth,
     }
   }
 
-  return userSnapshot;
+  return userDocRef;
 };
 
 export const createAuthUserWithEmailAndPassword = async (email, password) => {
@@ -94,39 +119,39 @@ export const onAuthStateChangedListener = (callback) => {
   onAuthStateChanged(auth, callback);
 }
 
-export const addCollectionAndDocuments = async (collectionKey,
-                                                objectsToAdd,
-                                                field = 'title' ) => {
-  const collectionRef = collection(db, collectionKey);
-  const batch = writeBatch(db);
+// export const addCollectionAndDocuments = async (collectionKey,
+//                                                objectsToAdd,
+//                                                field = 'title' ) => {
+//  const collectionRef = collection(db, collectionKey);
+//  const batch = writeBatch(db);
+//
+//  objectsToAdd.forEach((object) => {
+//    const docRef = doc(collectionRef, object[field].toLowerCase());
+//    batch.set(docRef, object);
+//    console.log("add", object.title.toLowerCase(), collectionRef, " into database");
+//  });
+//
+//  await batch.commit();
+//  console.log('done');
+//};
 
-  objectsToAdd.forEach((object) => {
-    const docRef = doc(collectionRef, object[field].toLowerCase());
-    batch.set(docRef, object);
-    console.log("add", object.title.toLowerCase(), collectionRef, " into database");
-  });
+// export const getCategoriesAndDocuments = async () => {
+//  const collectionRef = collection(db, 'categories');
+//  const q = query(collectionRef);
 
-  await batch.commit();
-  console.log('done');
-};
+//  const querySnapshot = await getDocs(q);
+//  return querySnapshot.docs.map((docSnapshot) => docSnapshot.data());
+// };
 
-export const getCategoriesAndDocuments = async () => {
-  const collectionRef = collection(db, 'categories');
-  const q = query(collectionRef);
-
-  const querySnapshot = await getDocs(q);
-  return querySnapshot.docs.map((docSnapshot) => docSnapshot.data());
-};
-
-export const getCurrentUser = () => {
-  return new Promise((resolve, reject) => {
-    const unsubscribe = onAuthStateChanged(
-      auth,
-      (userAuth) => {
-        unsubscribe();
-        resolve(userAuth);
-      },
-      reject
-    );
-  });
-};
+// export const getCurrentUser = () => {
+//   return new Promise((resolve, reject) => {
+//     const unsubscribe = onAuthStateChanged(
+//       auth,
+//       (userAuth) => {
+//         unsubscribe();
+//         resolve(userAuth);
+//       },
+//       reject
+//     );
+//   });
+// };

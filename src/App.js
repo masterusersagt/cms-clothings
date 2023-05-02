@@ -8,12 +8,16 @@ import { Routes, Route }              from 'react-router-dom';
 import { useEffect }                  from 'react';
 import { useDispatch }                from 'react-redux';
 
-import { checkUserSession }             from './store/user/user.action';
+import { setCurrentUser }             from './store/user/user.reducer';
+//import { checkUserSession }           from './store/user/user.action';
+import { onAuthStateChangedListener, createUserDocumentFromAuth } from './utils/firebase/firebase.utils';
 
 const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+      // Change 1.
+      //
       // const unsubscribe = onAuthStateChangedListener((user) => {
       //     console.log("state Change", user);
       //     if(user) {
@@ -22,7 +26,20 @@ const App = () => {
       //     dispatch(setCurrentUser(user));
       // });
       // return unsubscribe;
-      dispatch(checkUserSession());
+      //
+      // Change 2.
+      // dispatch(checkUserSession());
+      const unsubscribe = onAuthStateChangedListener((user) => {
+        if (user) {
+          createUserDocumentFromAuth(user);
+        }
+      const pickedUser = user && (({ accessToken, email }) => ({ accessToken, email }))(user);
+  
+      console.log(setCurrentUser(pickedUser));
+        dispatch(setCurrentUser(pickedUser));
+      });
+
+      return unsubscribe;
   }, [dispatch]); //oder []
 
   return (
